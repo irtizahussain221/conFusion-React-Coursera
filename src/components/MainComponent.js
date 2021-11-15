@@ -16,11 +16,6 @@ class Main extends React.Component {
 
   onDishSelect(dishId) {
     this.setState({ selectedDish: dishId });
-    console.log(
-      this.state.dishes.filter((dish) => {
-        return dish.id === this.state.selectedDish;
-      })
-    );
   }
 
   render() {
