@@ -2,10 +2,6 @@ import React from "react";
 import { Card, CardBody, CardText, CardTitle, CardImg } from "reactstrap";
 
 class DishDetail extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderDish(dish) {
     return (
       <Card>
@@ -23,7 +19,11 @@ class DishDetail extends React.Component {
       return <div></div>;
     } else {
       return comments.map((comment) => {
-        let date = new Date(comment.date).toUTCString();
+        let date = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        }).format(new Date(Date.parse(comment.date)));
         return (
           <li key={comment.id}>
             <p>{comment.comment}</p>
@@ -37,15 +37,17 @@ class DishDetail extends React.Component {
   }
   render() {
     return (
-      <div className="row">
-        <div className="col-12 col-md-5 mt-1">
-          {this.renderDish(this.props.dish)}
-        </div>
-        <div className="col-12 col-md-5 mt-1">
-          <h4>Comments</h4>
-          <ul className="list-unstyled">
-            {this.renderComments(this.props.dish.comments)}
-          </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-5 mt-1">
+            {this.renderDish(this.props.dish)}
+          </div>
+          <div className="col-12 col-md-5 mt-1">
+            <h4>Comments</h4>
+            <ul className="list-unstyled">
+              {this.renderComments(this.props.dish.comments)}
+            </ul>
+          </div>
         </div>
       </div>
     );
