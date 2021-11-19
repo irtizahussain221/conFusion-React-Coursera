@@ -38,7 +38,13 @@ class CommentForm extends React.Component {
     this.state = {
       isModalOpen: false,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  handleSubmit(values) {
+    alert("Values : " + JSON.stringify(values));
+    console.log("Values : " + JSON.stringify(values));
   }
 
   toggleModal() {
@@ -63,7 +69,7 @@ class CommentForm extends React.Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm>
+            <LocalForm onSubmit={this.handleSubmit}>
               <Row className="form-group">
                 <Label htmlFor="rating" className="col-form-label">
                   Rating
