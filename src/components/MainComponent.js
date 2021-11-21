@@ -11,6 +11,7 @@ import {
   fetchDishes,
   fetchComments,
   fetchPromos,
+  postComment,
 } from "../redux/ActionsCreator";
 import { connect } from "react-redux";
 import Contact from "./ContactComponent";
@@ -34,6 +35,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
+  postComment: (dishId, rating, author, comment) =>
+    dispatch(postComment(dishId, rating, author, comment)),
 });
 
 class Main extends React.Component {
@@ -49,7 +52,6 @@ class Main extends React.Component {
 
   render() {
     const DishWithId = ({ match }) => {
-      console.log(this.props);
       return (
         <DishDetail
           dish={
@@ -64,6 +66,7 @@ class Main extends React.Component {
           )}
           commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment}
+          postComment={this.props.postComment}
         />
       );
     };

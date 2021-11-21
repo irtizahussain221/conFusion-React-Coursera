@@ -45,7 +45,7 @@ class CommentForm extends React.Component {
   }
 
   handleSubmit(values) {
-    this.props.addComment(
+    this.props.postComment(
       this.props.dishId,
       values.rating,
       values.author,
@@ -156,7 +156,7 @@ class CommentForm extends React.Component {
   }
 }
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
   if (!comments) {
     return <div></div>;
   } else {
@@ -177,7 +177,7 @@ function RenderComments({ comments, addComment, dishId }) {
             </li>
           );
         })}
-        <CommentForm dishId={dishId} addComment={addComment} />
+        <CommentForm dishId={dishId} postComment={postComment} />
       </ul>
     );
   }
@@ -225,7 +225,7 @@ class DishDetail extends React.Component {
               <h4>Comments</h4>
               <RenderComments
                 comments={this.props.comments}
-                addComment={this.props.addComment}
+                postComment={this.props.postComment}
                 dishId={this.props.dish.id}
               />
             </div>
