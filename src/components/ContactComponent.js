@@ -20,7 +20,15 @@ class Contact extends React.Component {
     console.log("current state is " + JSON.stringify(values));
     alert("current state is " + JSON.stringify(values));
     this.props.resetFeedbackForm();
-    // event.preventDefault(); No longer required with react-redux-form library
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.agree,
+      values.contactType,
+      values.message
+    );
   }
 
   render() {

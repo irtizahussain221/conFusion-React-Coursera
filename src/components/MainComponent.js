@@ -12,6 +12,8 @@ import {
   fetchComments,
   fetchPromos,
   postComment,
+  fetchLeaders,
+  postFeedback,
 } from "../redux/ActionsCreator";
 import { connect } from "react-redux";
 import Contact from "./ContactComponent";
@@ -30,20 +32,49 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) =>
     dispatch(addComment(dishId, rating, author, comment)),
+
   fetchDishes: () => dispatch(fetchDishes()),
+
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
   },
+
   fetchComments: () => dispatch(fetchComments()),
+
   fetchPromos: () => dispatch(fetchPromos()),
+
   postComment: (dishId, rating, author, comment) =>
     dispatch(postComment(dishId, rating, author, comment)),
+
+  fetchLeaders: () => dispatch(fetchLeaders()),
+
+  postFeedback: (
+    firstname,
+    lastname,
+    telnum,
+    email,
+    agree,
+    contactType,
+    message
+  ) =>
+    dispatch(
+      postFeedback(
+        firstname,
+        lastname,
+        telnum,
+        email,
+        agree,
+        contactType,
+        message
+      )
+    ),
 });
 
 class Main extends React.Component {
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
+    this.props.fetchLeaders();
     this.props.fetchPromos();
   }
 
@@ -84,7 +115,11 @@ class Main extends React.Component {
           }
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+          leader={
+            this.props.leaders.leaders.filter((leader) => leader.featured)[0]
+          }
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errmess}
         />
       );
     };
@@ -113,12 +148,21 @@ class Main extends React.Component {
                 exact
                 path="/contactus"
                 component={() => (
-                  <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                  <Contact
+                    resetFeedbackForm={this.props.resetFeedbackForm}
+                    postFeedback={this.props.postFeedback}
+                  />
                 )}
               />
               <Route
                 path="/aboutus"
-                component={() => <About leaders={this.props.leaders} />}
+                component={() => (
+                  <About
+                    leaders={this.props.leaders.leaders}
+                    leaderErrMess={this.props.leaders.errmess}
+                    leaderLoading={this.props.leaders.isLoading}
+                  />
+                )}
               />
               <Route path="/menu/:dishId" component={DishWithId} />
               <Redirect to="/home" />
